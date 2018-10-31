@@ -1,0 +1,2 @@
+# wepy-test
+wepy test
