@@ -1,0 +1,123 @@
+<style lang="less">
+    @base-color: #202020;
+    @gray-color: #717171;
+    .article-detail {
+        width: 100%;
+        .title {
+            color: @base-color;
+            font-size: 36rpx;
+            margin: 14rpx;
+            display: block;
+        }
+        .author {
+            color: @gray-color;
+            font-size: 28rpx;
+            display: block;
+            margin: 14rpx;
+        }
+        .content {
+            padding: 14rpx;
+        }
+    }
+</style>
+
+<template>
+    <Loading wx:if="{{loading==true}}" :pageType="" />
+    <scroll-view class="article-detail">
+        <image src="{{detail.coverurl}}" wx:if="{{detail.coverurl!=''}}" style="width:100%;" />
+        <text class="title">{{detail.title}}</text>
+        <text class="author">{{detail.author_name}}</text>
+        <view class="content">
+            <htmlParser :parserName="name" :parserContent.sync="htmlCotent" />
+        </view>
+    </scroll-view>
+</template>
+
+<script>
+    import wepy from 'wepy';
+    import WxParse from '../wxParse/wxParse';
+    import htmlParser from '../components/htmlParser';
+    import Loading from '../components/loading';
+    export default class CardDetail extends wepy.page {
+        onShareAppMessage() {
+            return {
+                title: '旺材有点料',
+                path: '/pages/card-detail?id=' + this.detail.id
+            };
+        }
+        config = {
+            navigationBarTitleText: '旺材有点料'
+        };
+        props = {
+            id: Number,
+            type: Number
+        };
+        components = {
+            htmlParser: htmlParser,
+            Loading: Loading
+        };
+        data = {
+            detail: {},
+            htmlCotent: '',
+            loading: true,
+            params: {
+                type: 2,
+                cid: ''
+            }
+        };
+        onLoad(options) {
+            this.requestDetail(options.id);
+        }
+        requestDetail(id) {
+            let that = this;
+            if (!wx.getStorageSync('cid')) {
+                that.getCid().then(d => {
+                    console.log('rec-cid: ', d);
+                    that.params.cid = d;
+                    wepy
+                        .request({
+                            url: 'https://m.maicai360.cn/api/v1/Articles/' + id,
+                            data: {
+                                cid: d
+                            }
+                        })
+                        .then(res => {
+                            that.detail = res.data;
+                            that.htmlCotent = res.data.content;
+                            that.loading = false;
+                            that.$apply();
+                            that.$invoke('htmlParser', 'htmlParserNotice');
+                        });
+                });
+            } else {
+                that.params.cid = wx.getStorageSync('cid');
+                wepy
+                    .request({
+                        url: 'https://m.maicai360.cn/api/V1/Articles/detail/' + id,
+                        data: that.params
+                    })
+                    .then(res => {
+                        that.detail = res.data;
+                        that.htmlCotent = res.data.content;
+                        that.loading = false;
+                        that.$apply();
+                        that.$invoke('htmlParser', 'htmlParserNotice');
+                    });
+            }
+        }
+        async getCid() {
+            let that = this;
+            let _cid = '';
+            await wepy
+                .request({
+                    url: 'https://m.maicai360.cn/api/v1/ArticleNew/getcid'
+                })
+                .then(d => {
+                    that.params.cid = d.data.cid;
+                    wx.setStorageSync('cid', d.data.cid);
+                    _cid = d.data.cid;
+                });
+            return _cid;
+        }
+    }
+</script>>

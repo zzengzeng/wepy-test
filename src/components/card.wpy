@@ -1,0 +1,263 @@
+<style lang="less">
+    @base-color: #000;
+    .border-radius(@radius) {
+        -moz-border-radius: @radius;
+        -webkit-border-radius: @radius;
+        border-radius: @radius;
+    }
+    .list-title () {
+        font-size: @list-title-size;
+        color: @list-title-color;
+        line-height: @list-title-line-height;
+        font-weight: @list-title-weight;
+    }
+    .list-subinfo () {
+        font-size: @list-subinfo-size;
+        color: @list-subinfo-color;
+        line-height: @list-subinfo-line-height;
+        font-weight: @list-subinfo-weight;
+    } //单行省略
+    .ellipsis() {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    } //多行省略
+    .multi-ellipsis(@row) {
+        overflow: hidden;
+        word-wrap: break-word;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: @row;
+    } ////List 
+    //title
+    @list-title-size: 36rpx;
+    @list-title-color: #202020;
+    @list-title-line-height: 150%; //27rpx
+    @list-title-weight: normal; //subinfo
+    @list-subinfo-size: 26rpx;
+    @list-subinfo-color: #717171;
+    @list-subinfo-line-height: 150%; //19.5rpx
+    @list-subinfo-weight: normal;
+    .article-item {
+        margin: auto 20rpx;
+        border-bottom: 2rpx solid #f2f2f2;
+        flex: 0 0 auto;
+        .border-radius(15rpx);
+        background: #fff;
+        height: 1086rpx;
+        position: relative;
+        .item-hd {
+            color: @list-title-color;
+            &:visited {
+                color: @list-title-color;
+                h3 {
+                    color: @list-subinfo-color;
+                }
+            }
+            &:hover,
+            &:active {
+                color: @list-title-color;
+            }
+            .title-wrapper {
+                padding: 28rpx;
+                display: block;
+                .title {
+                    .list-title();
+                    margin: 0 0 16rpx;
+                }
+                .count {
+                    color: #F87F5B;
+                    font-size: 32rpx;
+                    margin: 0 0 16rpx;
+                    text-align: right;
+                    float: right;
+                }
+            }
+            .sub-title {
+                .list-title();
+                padding: 28rpx;
+                border-top: 2rpx solid #F2F2F2;
+            }
+        }
+        .show {
+            width: 100%;
+            position: relative;
+            .i-video-play {
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                background: url("https://m.maicai360.cn/assert/dist/images/btn_video_play.png") no-repeat 50%;
+                background-size: 100rpx;
+            }
+            .thumbnail {
+                width: 100%;
+                display: block;
+                margin-bottom: 20rpx;
+            }
+        }
+        .item-bd {
+            height: 242rpx;
+        }
+        .info {
+            .list-subinfo();
+            font-size: 20rpx;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: flex-start;
+            .label {
+                .border-radius(6rpx);
+                padding: 6rpx 6rpx 0;
+                margin-left: -6rpx;
+                margin-right: 0;
+                font-size: 20rpx;
+                line-height: 20rpx;
+                transform: scale(0.7, 0.7);
+                &.mark0 {
+                    border: 0;
+                    display: none;
+                    padding: 0;
+                    margin: 0;
+                    &:after {
+                        content: "";
+                        display: none;
+                    }
+                }
+                &.mark1 {
+                    color: #f39800; //金橙
+                    border: 2rpx solid #f39800;
+                    &:after {
+                        content: "原创";
+                    }
+                }
+                &.mark2 {
+                    color: #e60039; //红--火热
+                    border: 2rpx solid #e60039;
+                    &:after {
+                        content: "热门";
+                    }
+                }
+                &.mark3 {
+                    color: #4d81ad; //灰蓝
+                    border: 2rpx solid #4d81ad;
+                    &:after {
+                        content: "广告";
+                    }
+                }
+                &.mark4 {
+                    color: #e60039; //红//紫--高贵7000e2
+                    border: 2rpx solid #e60039;
+                    &:after {
+                        content: "精华";
+                    }
+                }
+                &.mark5 {
+                    color: #ea5504; //橙
+                    border: 2rpx solid #ea5504;
+                    &:after {
+                        content: "价格";
+                    }
+                }
+                &.mark6 {
+                    color: #ea5504; //橙
+                    border: 2rpx solid #ea5504;
+                    &:after {
+                        content: "行情";
+                    }
+                }
+                &.mark7 {
+                    color: #4d81ad; //灰蓝
+                    border: 2rpx solid #4d81ad;
+                    &:after {
+                        content: "图集";
+                    }
+                }
+            }
+            .attach-label {
+                .list-subinfo();
+                font-size: 20rpx;
+                color: #999999;
+                margin-right: 10rpx;
+                .ljh5-guanzhu {
+                    font-size: 28rpx;
+                    margin-right: 4rpx;
+                    position: relative;
+                    top: 4rpx;
+                }
+                &.author {
+                    //color: #2ea9df;
+                    color: #999999;
+                }
+                &.detail {
+                    padding: 14rpx;
+                    font-size: 28rpx;
+                }
+                &.hide {
+                    display: none;
+                }
+            }
+        }
+        .info-bottom {
+            &.date {
+                position: absolute;
+                z-index: 12;
+                font-size: 28rpx;
+                display: block;
+                text-align: right;
+                bottom: 28rpx;
+                right: 28rpx;
+            }
+        }
+    }
+</style>
+
+<template>
+    <navigator url="/pages/card-detail?id={{id}}" hover-class="none">
+        <view class="article-item">
+            <view class="item-hd">
+                <view class="title-wrapper ">
+                    <text class="title">{{author}}</text>
+                    <text class="count">{{viewCount}}浏览</text>
+                </view>
+                <view class="sub-title">{{title}}</view>
+                <view class="show" wx:if="{{thumbnail!='' && isCover == 1}}">
+                    <image src='{{thumbnail}}' class="thumbnail" mode="aspectFill" />
+                </view>
+            </view>
+            <view class="item-bd">
+                <view class="info">
+                    <!--<text class="label mark{{mark}}"></text>-->
+                    <text class="attach-label detail">{{intro}}</text>
+                </view>
+                <text class="info-bottom date">
+                    {{date}} 
+                </text>
+            </view>
+        </view>
+    </navigator>
+</template>
+
+<template>
+
+</template>
+
+<script>
+    import wepy from 'wepy'
+    export default class Card extends wepy.component {
+        props = {
+            id: Number,
+            title: String,
+            thumbnail: String,
+            author: String,
+            date: String,
+            viewCount: String,
+            isCover: Number,
+            intro: String
+        }
+        onLoad() {
+            //console.log(this)
+        }
+    }
+</script>
